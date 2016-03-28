@@ -1,5 +1,8 @@
 package nuts.hiro.regex;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class ExpressaoRegular {
 
 	public static void main(String[] args) {
@@ -37,16 +40,16 @@ public class ExpressaoRegular {
 		 */
 		
 		
-		b = "@".matches(".");
+		b = "@".matches("."); // qualquer caractere
 		System.out.println(b);
 		
-		b = "2".matches("\\d");
+		b = "2".matches("\\d"); // qualquer digito
 		System.out.println(b);
 		
-		b = "a".matches("\\w");
+		b = "a".matches("\\w"); // qualquer letra ou numero
 		System.out.println(b);
 		
-		b = " ".matches("\\s");
+		b = " ".matches("\\s"); // espaço
 		System.out.println(b);
 		
 		b = "Pi".matches(".."); // procura 2 caracteres
@@ -75,7 +78,7 @@ public class ExpressaoRegular {
 		 */
 		
 		
-		b = "21".matches("\\d{2}");
+		b = "21".matches("\\d{2}"); // dois digitos
 		System.out.println(b);
 		
 		b = "214".matches("\\d{2,}"); //pelo menos 2 digitos
@@ -123,7 +126,82 @@ public class ExpressaoRegular {
 		b = "sim".matches("sim|nao");  // deve conter sim OU nao
 		System.out.println(b);
 		
+		/*
+		 * AGRUPADORES
+		 * 
+		 * [...]                 Agrupamento
+		 * [a-z]                 Alcance
+		 * [a-e][i-u]            Uniao
+		 * [a-z&&[aeiou]  ]      Intersecao
+		 * [^abc]                Excecao
+		 * [a-z&&[^m-p]]         Subtracao
+		 * \x                    Fuga literal
+		 * 
+		 */
 		
+		b = "x".matches("[a-z]");  // Qualquer letra de a-z
+		System.out.println(b);
+		
+		b = "3".matches("[0-9]");  // Qualquer numero de 0-9
+		System.out.println(b);
+		
+		b = "true".matches("[Tt]rue");  // pode ser True ou true
+		System.out.println(b);
+		
+		b = "True".matches("[Tt]rue");  // pode ser True ou true
+		System.out.println(b);
+		
+		b = "Yes".matches("[Tt]rue|[yY]es");  // pode ser True ou true ou yes ou Yes
+		System.out.println(b);
+		
+		b = "yes".matches("[Tt]rue|[yY]es");  // pode ser True ou true ou yes ou Yes
+		System.out.println(b);
+		
+		b = "Hiroshi".matches("[A-Z][a-zA-Z]*");  //Primeiro nome começa com letra maiuscula ou pode ser tudo maiusculo
+		System.out.println(b);
+		
+		b = "olho".matches("[^abc]lho");  //qualquer palavra q termine com lho , mas nao pode começar nem com a, b, c
+		System.out.println(b);
+		
+		b = "crau".matches("cr[ae]u");  //avaliando no meio -- escreveu crau ou creu
+		System.out.println(b);
+		
+		b = "hiro@hironuts.com.br".matches("\\w+@\\w+\\.\\w{2,3}.*");  //validacao de e-mail
+		System.out.println(b);
+		
+		String doce = "Qual é o Doce mais doCe que o doce?"; 
+		Matcher matcher = Pattern.compile("(?i)doce").matcher(doce); // encontrar todas as ocorrencias da palavra doce, escrito de qualquer modo
+		while(matcher.find()) { // enquantro encontrar ocorrencia
+			System.out.println(matcher.group()); // imprime as ocorrencias encontradas
+		}
+		
+		
+		/* SUBSTITUICOES */
+		
+		String r = doce.replaceAll("(?i)doce", "DOCINHO"); // substitui todas as palavras doce por DOCINHO
+		System.out.println(r);
+		
+		String rato = "O rato roeu a roupa do rei de roma";
+		r = rato.replaceAll("r[aeiou]", "XX"); // substitui todos ra-re-ri-ro-ru por XX
+		System.out.println(r);
+		
+		r = "Tabular este texto".replaceAll("\\s", "\t"); // subistitui os espaços por tabulação
+		System.out.println(r);
+		
+		////////////////////////////////////////////////////////////////////////////////////////
+		
+		String url = "www.hiro.com.br/clientes-2011.html";
+		//Mudar para o padrao - http://www.hiro.com.br/2011/clientes.jsp 
+		String re = "www.hiro.com.br/\\w{2,}-\\d{4}.html"; //avaliando a url antiga
+		b = url.matches(re);
+		System.out.println(b);
+		
+		re = "(www.hiro.com.br)/(\\w{2,})-(\\d{4}).html"; // Colocar o ( ) , transformou o texto em uma variavel
+		
+		r = url.replaceAll(re, "http://$1/$3/$2.jsp"); // ordenar as variaveis q estao no ()
+		
+		System.out.println(url); // texto antes de substituir
+		System.out.println(r); // imprime o texto substitutido
 		
 	}
 }
