@@ -38,8 +38,8 @@ public class IOPathLeituraEscrita {
 	byte[] bytes = "Meu Texto".getBytes(); // transforma o texto para bytes
 	Files.write(path, bytes); // cria, limpa e escreve dentro do arquivo
 	
-	byte[] retorno = Files.readAllBytes(path);
-	System.out.println(new String(retorno));
+	byte[] retorno = Files.readAllBytes(path); // capitura os bytes escrito
+	System.out.println(new String(retorno)); // escreve os bytes em String
 	
 	}
 
