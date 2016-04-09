@@ -16,10 +16,15 @@ public class Layout extends JFrame {
 		Container c = getContentPane(); //recuperar o layout padrao (border layout)
 		
 		
+		/*FLOWLAYOUT  adiciona os botao na ordem de chegada */
+		
 		c.setLayout(new FlowLayout()); // este Layout, adiciona os botoes na ordem de chegada
 		c.add(new JButton("1"));
 		c.add(new JButton("2"));
 		c.add(new JButton("3"));
+		
+		
+		/*BORDERLAYOUT -  PADRAO , precisa setar a localizacao do botao*/
 		
 		//BorderLayout border = new BorderLayout(); // Layout Border (padrao)
 		//c.setLayout(border); // Layout Border (padrao)
