@@ -1,4 +1,4 @@
-package nuts.hiro.Math;
+package nuts.hiro.math;
 
 public class MathComands {
 	
